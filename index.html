@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MeetIQ AI | Intelligent Meeting Insights Platform</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a2e;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #16213e;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            width: 95%;
+            max-width: 850px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #aaaaaa;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+
+        /* Tabs */
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #aaaaaa;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: #e94560;
+            border-bottom: 2px solid #e94560;
+        }
+
+        /* Sections */
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Buttons */
+
+        .btn {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn:disabled {
+            background-color: #555555;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #stopBtn {
+            background-color: #dc3545;
+        }
+
+        #actionBtn {
+            display: none;
+            background-color: #28a745;
+        }
+
+        /* Result */
+
+        .result-title {
+            color: #ffffff;
+            margin-top: 30px;
+        }
+
+        .result-box {
+            margin-top: 15px;
+            padding: 18px;
+            background-color: #0f3460;
+            border-radius: 10px;
+            color: #ffffff;
+            text-align: left;
+            white-space: pre-line;
+            min-height: 100px;
+            border: 1px solid #e94560;
+            line-height: 1.6;
+        }
+
+        /* Action Items */
+
+        #actionItemsSection {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #0f3460;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: #e94560;
+            color: #ffffff;
+            padding: 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #2d4f78;
+            color: #ffffff;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .empty-message {
+            color: #cccccc;
+            padding: 20px;
+        }
+
+        /* Priority badges */
+
+        .priority {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .priority-high {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .priority-medium {
+            background-color: #ffc107;
+            color: #1a1a2e;
+        }
+
+        .priority-low {
+            background-color: #28a745;
+            color: white;
+        }
+
+        /* Footer */
+
+        .footer {
+            color: #777777;
+            font-size: 12px;
+            margin-top: 30px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 1.3rem;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .tab-btn {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            th,
+            td {
+                padding: 10px;
+                font-size: 13px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Application Header -->
+
+    <h1>MeetIQ AI 🎙️</h1>
+
+    <p class="subtitle">
+        Intelligent Meeting Insights Platform
+    </p>
+
+
+    <!-- Record / Upload Tabs -->
+
+    <div class="tabs">
+
+        <button
+            class="tab-btn active"
+            onclick="showTab('record', this)">
+            Record Audio
+        </button>
+
+        <button
+            class="tab-btn"
+            onclick="showTab('upload', this)">
+            Upload File
+        </button>
+
+    </div>
+
+
+    <!-- Record Audio Section -->
+
+    <div id="record" class="section active">
+
+        <p style="color:#ccc;">
+            Record your meeting and let AI generate intelligent insights.
+        </p>
+
+        <button
+            id="startBtn"
+            class="btn"
+            onclick="startRecording()">
+            🎤 Start Recording
+        </button>
+
+        <button
+            id="stopBtn"
+            class="btn"
+            style="display:none;"
+            onclick="stopRecording()">
+            ⏹️ Stop & Process
+        </button>
+
+    </div>
+
+
+    <!-- Upload Audio Section -->
+
+    <div id="upload" class="section">
+
+        <p style="color:#ccc;">
+            Upload an MP3 or WAV meeting recording.
+        </p>
+
+        <input
+            type="file"
+            id="audioFile"
+            accept="audio/*"
+            style="color:white; margin-bottom:10px;"
+        >
+
+        <br>
+
+        <button
+            class="btn"
+            onclick="uploadFile()">
+            📤 Upload & Process
+        </button>
+
+    </div>
+
+
+    <!-- AI Meeting Summary -->
+
+    <h3 class="result-title">
+        AI Meeting Summary
+    </h3>
+
+    <div
+        id="output"
+        class="result-box">
+        Your meeting insights will appear here...
+    </div>
+
+
+    <!-- Generate Action Items Button -->
+
+    <button
+        id="actionBtn"
+        class="btn"
+        onclick="generateActionItems()">
+        ✨ Generate Action Items
+    </button>
+
+
+    <!-- Action Items -->
+
+    <div id="actionItemsSection">
+
+        <h3 class="result-title">
+            Meeting Action Items
+        </h3>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Task</th>
+                        <th>Owner</th>
+                        <th>Due Date</th>
+                        <th>Priority</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="actionItemsBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- Footer -->
+
+    <div class="footer">
+        Powered by MeetIQ AI
+    </div>
+
+</div>
+
+
+<script>
+
+    let mediaRecorder;
+    let audioChunks = [];
+    let currentSummary = "";
+
+
+    /*
+    ==========================================
+    TAB NAVIGATION
+    ==========================================
+    */
+
+    function showTab(tabName, button) {
+
+        document
+            .querySelectorAll(".section")
+            .forEach(section => {
+                section.classList.remove("active");
+            });
+
+
+        document
+            .querySelectorAll(".tab-btn")
+            .forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+
+        document
+            .getElementById(tabName)
+            .classList.add("active");
+
+
+        button.classList.add("active");
+    }
+
+
+    /*
+    ==========================================
+    START RECORDING
+    ==========================================
+    */
+
+    async function startRecording() {
+
+        try {
+
+            const stream =
+                await navigator.mediaDevices.getUserMedia({
+                    audio: true
+                });
+
+
+            mediaRecorder =
+                new MediaRecorder(stream);
+
+
+            audioChunks = [];
+
+
+            mediaRecorder.ondataavailable =
+                event => {
+
+                    if (event.data.size > 0) {
+
+                        audioChunks.push(
+                            event.data
+                        );
+
+                    }
+
+                };
+
+
+            mediaRecorder.onstop =
+                async () => {
+
+                    const mimeType =
+                        mediaRecorder.mimeType ||
+                        "audio/webm";
+
+
+                    const audioBlob =
+                        new Blob(
+                            audioChunks,
+                            {
+                                type: mimeType
+                            }
+                        );
+
+
+                    await sendToBackend(
+                        audioBlob,
+                        "meeting-recording.webm"
+                    );
+
+
+                    stream
+                        .getTracks()
+                        .forEach(
+                            track => track.stop()
+                        );
+
+                };
+
+
+            mediaRecorder.start();
+
+
+            document
+                .getElementById("startBtn")
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById("stopBtn")
+                .style.display =
+                "inline-block";
+
+
+            document
+                .getElementById("output")
+                .innerText =
+                "🎙️ Recording meeting...";
+
+
+            resetActionItems();
+
+        }
+
+        catch (error) {
+
+            document
+                .getElementById("output")
+                .innerText =
+                "Unable to access microphone: " +
+                error.message;
+
+        }
+
+    }
+
+
+    /*
+    ==========================================
+    STOP RECORDING
+    ==========================================
+    */
+
+    function stopRecording() {
+
+        if (
+            mediaRecorder &&
+            mediaRecorder.state !== "inactive"
+        ) {
+
+            mediaRecorder.stop();
+
+        }
+
+
+        document
+            .getElementById("startBtn")
+            .style.display =
+            "inline-block";
+
+
+        document
+            .getElementById("stopBtn")
+            .style.display =
+            "none";
+
+
+        document
+            .getElementById("output")
+            .innerText =
+            "Processing meeting audio...";
+
+    }
+
+
+    /*
+    ==========================================
+    UPLOAD AUDIO
+    ==========================================
+    */
+
+    function uploadFile() {
+
+        const fileInput =
+            document.getElementById(
+                "audioFile"
+            );
+
+
+        if (
+            fileInput.files.length === 0
+        ) {
+
+            alert(
+                "Please select an audio file."
+            );
+
+            return;
+
+        }
+
+
+        const selectedFile =
+            fileInput.files[0];
+
+
+        document
+            .getElementById("output")
+            .innerText =
+            "Uploading and processing meeting audio...";
+
+
+        resetActionItems();
+
+
+        sendToBackend(
+            selectedFile,
+            selectedFile.name
+        );
+
+    }
+
+
+    /*
+    ==========================================
+    SEND AUDIO TO FASTAPI
+    ==========================================
+    */
+
+    async function sendToBackend(
+        fileObj,
+        fileName
+    ) {
+
+        const formData =
+            new FormData();
+
+
+        formData.append(
+            "file",
+            fileObj,
+            fileName
+        );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/process-audio",
+                    {
+
+                        method: "POST",
+
+                        body: formData
+
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Audio processing failed."
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            currentSummary =
+                data.message;
+
+
+            document
+                .getElementById("output")
+                .innerText =
+                currentSummary;
+
+
+            /*
+            Show Generate Action Items
+            after summary is generated
+            */
+
+            document
+                .getElementById("actionBtn")
+                .style.display =
+                "inline-block";
+
+        }
+
+        catch (error) {
+
+            document
+                .getElementById("output")
+                .innerText =
+                "Error processing audio: " +
+                error.message;
+
+        }
+
+    }
+
+
+    /*
+    ==========================================
+    GENERATE ACTION ITEMS
+    ==========================================
+    */
+
+    async function generateActionItems() {
+
+        if (!currentSummary) {
+
+            alert(
+                "Please process a meeting first."
+            );
+
+            return;
+
+        }
+
+
+        const actionButton =
+            document.getElementById(
+                "actionBtn"
+            );
+
+
+        actionButton.disabled = true;
+
+        actionButton.innerText =
+            "Generating Action Items...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/action-items",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                text:
+                                    currentSummary
+
+                            })
+
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to generate action items."
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            displayActionItems(
+                data.action_items
+            );
+
+        }
+
+        catch (error) {
+
+            alert(
+                "Error generating action items: " +
+                error.message
+            );
+
+        }
+
+        finally {
+
+            actionButton.disabled = false;
+
+            actionButton.innerText =
+                "✨ Generate Action Items";
+
+        }
+
+    }
+
+
+    /*
+    ==========================================
+    DISPLAY ACTION ITEMS
+    ==========================================
+    */
+
+    function displayActionItems(items) {
+
+        const tableBody =
+            document.getElementById(
+                "actionItemsBody"
+            );
+
+
+        tableBody.innerHTML = "";
+
+
+        /*
+        If no action items were found
+        */
+
+        if (
+            !items ||
+            items.length === 0
+        ) {
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td
+                    colspan="4"
+                    class="empty-message">
+
+                    No action items were identified.
+
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(row);
+
+        }
+
+        else {
+
+            items.forEach(item => {
+
+                const row =
+                    document.createElement("tr");
+
+
+                const priority =
+                    item.priority ||
+                    "Medium";
+
+
+                let priorityClass =
+                    "priority-medium";
+
+
+                if (
+                    priority.toLowerCase() ===
+                    "high"
+                ) {
+
+                    priorityClass =
+                        "priority-high";
+
+                }
+
+
+                else if (
+                    priority.toLowerCase() ===
+                    "low"
+                ) {
+
+                    priorityClass =
+                        "priority-low";
+
+                }
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${escapeHTML(
+                            item.task || "Not specified"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            item.owner || "Unassigned"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            item.due_date || "Not specified"
+                        )}
+                    </td>
+
+                    <td>
+
+                        <span
+                            class="priority ${priorityClass}">
+
+                            ${escapeHTML(priority)}
+
+                        </span>
+
+                    </td>
+
+                `;
+
+
+                tableBody.appendChild(row);
+
+            });
+
+        }
+
+
+        document
+            .getElementById(
+                "actionItemsSection"
+            )
+            .style.display =
+            "block";
+
+    }
+
+
+    /*
+    ==========================================
+    RESET ACTION ITEMS
+    ==========================================
+    */
+
+    function resetActionItems() {
+
+        currentSummary = "";
+
+
+        document
+            .getElementById(
+                "actionBtn"
+            )
+            .style.display =
+            "none";
+
+
+        document
+            .getElementById(
+                "actionItemsSection"
+            )
+            .style.display =
+            "none";
+
+
+        document
+            .getElementById(
+                "actionItemsBody"
+            )
+            .innerHTML =
+            "";
+
+    }
+
+
+    /*
+    ==========================================
+    BASIC HTML ESCAPING
+    ==========================================
+    */
+
+    function escapeHTML(value) {
+
+        return String(value)
+
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+
+    }
+
+</script>
+
+</body>
+
+</html>
