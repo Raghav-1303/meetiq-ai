@@ -8,6 +8,9 @@ Instead of manually taking notes during meetings, users can record audio directl
 
 ---
 
+## 📸 Application Preview
+
+![MeetIQ AI Application Preview](./assets/meetiq.png)
 
 
 ## 📸 Application Status
@@ -449,10 +452,24 @@ The application combines browser-based audio recording, REST APIs, speech recogn
 
 **MeetIQ AI – Intelligent Meeting Insights Platform**
 
-Built as a Full-Stack AI project using:
+## 🛠️ Tech Stack
 
-`Python` • `FastAPI` • `JavaScript` • `Whisper` • `BART` • `Hugging Face Transformers` • `Docker` • `FFmpeg`
+<p align="center">
+
+<img src="https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+<img src="https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white"/>
+<img src="https://img.shields.io/badge/JavaScript-Frontend-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
+<img src="https://img.shields.io/badge/Whisper-Speech_AI-412991?style=for-the-badge&logo=openai&logoColor=white"/>
+<img src="https://img.shields.io/badge/Hugging_Face-Transformers-FFD21E?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker&logoColor=white"/>
+<img src="https://img.shields.io/badge/FFmpeg-Audio-007808?style=for-the-badge&logo=ffmpeg&logoColor=white"/>
+
+</p>
 
 ---
+
+<div align="center">
+---
+
 
 ⭐ If you find MeetIQ AI useful, consider giving the repository a star.
